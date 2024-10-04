@@ -1,10 +1,11 @@
-# Nombre del juego (<- borrar y completar)
+# Batalla Pokemon
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Tobias Abel Albornoz
+- Brisa Calzado
+- Marcos Silva
+- Matias Nuñez
 
 ## Capturas
 
@@ -17,6 +18,6 @@
 
 ## Otros
 
-- Curso/Facultad
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- K2005 / UTN_FRBA
+- Versión de wollok: 0.2.7
+- Una vez terminado, no tenemos problemas en que el repositorio sea público 
