@@ -1,9 +1,21 @@
 import tipos.*
+// import wollok.game.*
 
 class Pokemon {
-  var nombre
-  var tipo
+  const nombre 
+  const tipo 
   var vida = 200
+  var property side = "Frente"
+  
+  method image() = nombre + side + ".png"
+
+  method position (){
+		if (side == "Frente"){
+			return game.at(5,4)
+		}else{
+			return game.at(15,7)
+		}
+	}
   
   // Metodo para calcular la efectividad del ataque
   method efectividad(tipoAtacante, tipoOponente) {
@@ -37,7 +49,7 @@ class Pokemon {
 } /* Agua */
 
 object squirtle inherits Pokemon (nombre = "Squirtle", tipo = agua) {
-  method burbuja(pokemonOponente) {
+    method burbuja(pokemonOponente) {
     self.atacar(pokemonOponente, 10) // Danio base de Burbuja es 10
   }
   

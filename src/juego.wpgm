@@ -1,5 +1,27 @@
 import wollok.game.* // Importa la biblioteca de juego
+import pokemones.*
 
+program Estadio {
+  game.height(60) // Alto del juego
+  game.width(120) // Ancho del juego
+  game.title("Estadio_Pelea") // Título del juego
+  
+  // Establece la imagen de fondo
+  game.boardGround("FondoPelea.png")
+
+  const  pokemon1 = pikachu
+  const  pokemon2 = charmander
+
+ // Posiciona los Pokémon en el escenario
+  game.addVisual(pokemon1)
+  game.addVisual(pokemon2)
+
+  game.start() // Inicia el juego
+}
+
+
+
+/*
 program menuGame {
   game.width(600) // Ancho del juego
   game.height(800) // Alto del juego
@@ -31,3 +53,4 @@ object startButton {
     // Acción al hacer clic en el botón
   }
 }
+*/
