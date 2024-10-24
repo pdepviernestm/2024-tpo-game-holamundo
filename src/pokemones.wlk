@@ -1,19 +1,19 @@
 import tipos.*
-// import wollok.game.*
+import wollok.game.*
 
 class Pokemon {
   const nombre 
   const tipo 
   var vida = 200
   var property side = "Frente"
-  
+
   method image() = nombre + side + ".png"
 
   method position (){
 		if (side == "Frente"){
-			return game.at(5,4)
+			return game.at(20,10)
 		}else{
-			return game.at(15,7)
+			return game.at(75,25)
 		}
 	}
   
@@ -35,16 +35,30 @@ class Pokemon {
     const efectividad_ataque = self.efectividad(tipo, pokemonOponente.tipo())
     const danioTotal = danioBase * efectividad_ataque
     pokemonOponente.recibirDanio(danioTotal)
+    self.terminarTurno()
   }
   
   // Ataque comun: Golpe Seco
   method golpeSeco(pokemonOponente) {
     pokemonOponente.recibirDanio(10) // Danio base de Golpe Seco es 10
+    self.terminarTurno()
   }
   
   // Metodo para recibir danio
   method recibirDanio(danio) {
     vida = (vida - danio).max(0)
+  }
+
+  method terminarTurno() {
+    self.cambiarPosicion()
+  }
+
+  method cambiarPosicion() {
+    if (side == "Frente"){
+			side = "Espalda"
+		}else{
+			side = "Frente"
+		}
   }
 } /* Agua */
 

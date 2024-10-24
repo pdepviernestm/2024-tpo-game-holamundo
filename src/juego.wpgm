@@ -9,13 +9,21 @@ program Estadio {
   // Establece la imagen de fondo
   game.boardGround("FondoPelea.png")
 
-  const  pokemon1 = pikachu
-  const  pokemon2 = charmander
+  var pokemon1 = pikachu
+  var pokemon2 = charmander
 
  // Posiciona los Pokémon en el escenario
   game.addVisual(pokemon1)
   game.addVisual(pokemon2)
 
+  game.onCollideDo(pokemon2, {otroPokemon => otroPokemon.cambiarPosicion() })
+  keyboard.a().onPressDo({
+    game.say(pokemon2, "AUCH")
+    const aux = pokemon1
+    pokemon1 = pokemon2
+    pokemon2 = aux
+    pokemon2.golpeSeco(pokemon1)
+    })
   game.start() // Inicia el juego
 }
 
