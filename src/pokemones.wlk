@@ -11,9 +11,9 @@ class Pokemon {
 
   method position (){
 		if (side == "Frente"){
-			return game.at(20,10)
+			return game.at(75,27)
 		}else{
-			return game.at(75,25)
+			return game.at(30,11)
 		}
 	}
   

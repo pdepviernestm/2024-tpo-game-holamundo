@@ -9,7 +9,7 @@ program Estadio {
   // Establece la imagen de fondo
   game.boardGround("FondoPelea.png")
 
-  var pokemon1 = pikachu
+  var pokemon1 = tepig
   var pokemon2 = charmander
 
  // Posiciona los Pokémon en el escenario
@@ -29,13 +29,13 @@ program Estadio {
 
 
 
-/*
+
 program menuGame {
-  game.width(600) // Ancho del juego
-  game.height(800) // Alto del juego
+  game.width(60) // Ancho del juego
+  game.height(60) // Alto del juego
   game.title("Menu Game") // Título del juego
   
-  game.boardGround("assets/pantalla_principal.png")
+  game.boardGround("menu_principal.png")
   // Establece la imagen de fondo
   
   game.addVisual(startButton) // Agrega el botón de inicio
@@ -45,20 +45,11 @@ program menuGame {
 
 // Definición del botón de iniciar
 object startButton {
-  var position = 0 // Variable para almacenar la posición del botón
-  
-  method image() = "assets/start.png"
-  
-  // Método que se llama cuando el juego inicia
-  method onStart() {
-    // Establece la posición del botón en el centro y en la parte inferior
-    position = game.at((game.width() / 2) - 50, game.height() - 100)
-    // Centrado horizontalmente y 100 píxeles arriba del borde inferior
-  }
+  var property position = game.at(25,10) 
+
+  method image() = "start2.png"
   
   method onClick() {
-    
     // Acción al hacer clic en el botón
   }
 }
-*/
