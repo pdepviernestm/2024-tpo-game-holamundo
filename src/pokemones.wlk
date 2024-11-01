@@ -26,7 +26,7 @@ class Pokemon {
     }
 	}
 
-  method cambiarPosicion() {
+  method cambiarSide() {
     if (side == "Frente"){
 			side = "Espalda"
 		}else{
@@ -64,8 +64,14 @@ class Pokemon {
   
   // Ataque comun: Golpe Seco
   method golpeSeco(pokemonOponente) {
-    pokemonOponente.recibirDanio(10) // Danio base de Golpe Seco es 10
-    // self.terminarTurno()
+    atacando = 1 // Semaforo para que se acerque a su oponente
+    pokemonOponente.recibirDanio(10)
+    /* Aca podriamos meter visuales */
+    game.say(pokemonOponente, "AUCH") 
+
+    // Volver a la posicion inicial
+    game.schedule(300, {atacando = 0})
+
   }
   
   // Metodo para recibir danio
