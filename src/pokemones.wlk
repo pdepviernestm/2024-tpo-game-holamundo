@@ -6,16 +6,33 @@ class Pokemon {
   const tipo 
   var vida = 200
   var property side = "Frente"
+  var atacando = 0  // la idea es que funcionen como un semaforo para la posicion de objeto
 
   method image() = nombre + side + ".png"
 
   method position (){
-		if (side == "Frente"){
-			return game.at(75,27)
-		}else{
-			return game.at(30,11)
-		}
+    if (atacando == 1){ /* Si esta atacando se acerca al oponente y luego vuelve */
+      if (side == "Frente"){
+        return game.at(30,11)
+      }else{
+        return game.at(75,27)
+      }
+    } else{
+        if (side == "Frente"){
+          return game.at(75,27)
+        } else{
+          return game.at(30,11)
+        }
+    }
 	}
+
+  method cambiarPosicion() {
+    if (side == "Frente"){
+			side = "Espalda"
+		}else{
+			side = "Frente"
+		}
+  }
   
   // Metodo para calcular la efectividad del ataque
   method efectividad(tipoAtacante, tipoOponente) {
@@ -32,16 +49,23 @@ class Pokemon {
   
   // Metodo de ataque generico, usado para todos los ataques
   method atacar(pokemonOponente, danioBase) {
+    atacando = 1 // Semaforo para que se acerque a su oponente
+
     const efectividad_ataque = self.efectividad(tipo, pokemonOponente.tipo())
     const danioTotal = danioBase * efectividad_ataque
+
     pokemonOponente.recibirDanio(danioTotal)
-    self.terminarTurno()
+    /* Aca podriamos meter visuales */
+    game.say(pokemonOponente, "AUCH") 
+
+    // Volver a la posicion inicial
+    game.schedule(300, {atacando = 0})
   }
   
   // Ataque comun: Golpe Seco
   method golpeSeco(pokemonOponente) {
     pokemonOponente.recibirDanio(10) // Danio base de Golpe Seco es 10
-    self.terminarTurno()
+    // self.terminarTurno()
   }
   
   // Metodo para recibir danio
@@ -53,13 +77,6 @@ class Pokemon {
     self.cambiarPosicion()
   }
 
-  method cambiarPosicion() {
-    if (side == "Frente"){
-			side = "Espalda"
-		}else{
-			side = "Frente"
-		}
-  }
 } /* Agua */
 
 object squirtle inherits Pokemon (nombre = "Squirtle", tipo = agua) {

@@ -11,19 +11,26 @@ program Estadio {
 
   var pokemon1 = tepig
   var pokemon2 = charmander
+  pokemon2.cambiarPosicion()
 
  // Posiciona los Pokémon en el escenario
   game.addVisual(pokemon1)
   game.addVisual(pokemon2)
 
-  game.onCollideDo(pokemon2, {otroPokemon => otroPokemon.cambiarPosicion() })
+  // game.onCollideDo(pokemon2, {otroPokemon => otroPokemon.cambiarPosicion() })
+
+  var turno = 1
   keyboard.a().onPressDo({
-    game.say(pokemon2, "AUCH")
-    const aux = pokemon1
-    pokemon1 = pokemon2
-    pokemon2 = aux
-    pokemon2.golpeSeco(pokemon1)
+   if(turno == 1){
+     pokemon1.golpeSeco(pokemon2)
+     turno = 0  // Cambia el turno al otro Pokémon
+     }
+   else {
+     pokemon2.golpeSeco(pokemon1)
+     turno = 1 // Cambia el turno de regreso a pokemon1
+     }
     })
+
   game.start() // Inicia el juego
 }
 
