@@ -10,7 +10,7 @@ program Estadio {
   
   // Establece la imagen de fondo
   game.boardGround("FondoPelea.png")
-  const pokemonFrente = tepig
+  const pokemonFrente = squirtle
   const pokemonEspalda = charmander
   pokemonEspalda.cambiarSide()
 
@@ -27,7 +27,8 @@ program Estadio {
      turno = 0  // Cambia el turno al otro Pokémon
      }
    else {
-     golpeSeco.ejecutar(pokemonEspalda, pokemonFrente)
+    //  golpeSeco.ejecutar(pokemonEspalda, pokemonFrente)
+     pokemonEspalda.elegirAtaque(pokemonFrente)
      turno = 1 // Cambia el turno de regreso a pokemonFrente
      }
     })

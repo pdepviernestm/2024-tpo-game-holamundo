@@ -7,10 +7,14 @@ class Ataque {
 
   // Método que cada ataque debe implementar
   method ejecutar(pokemonAtacante, pokemonOponente) {
+    game.say(pokemonAtacante, "Ejecuta Ataque " + self.nombre())
     pokemonAtacante.irAtacar() // Semaforo para que se acerque a su oponente
     
     const danioTotal = self.calcularEfecto(pokemonAtacante, pokemonOponente)
     pokemonOponente.recibirDanio(danioTotal)
+    
+    // Mostrar el valor actual de vida
+    game.say(pokemonOponente, "Vida restante: " + pokemonOponente.vida().toString())
     
     /* Aca podriamos meter visuales */
     // game.say(pokemonOponente, "AUCH") 
@@ -30,7 +34,7 @@ class Ataque {
     if (tipoAtacante == tipoOponente) {
       return 0.5
     } else {
-      if (tipoOponente.debilidad().contains(tipoAtacante.tipo())) {
+      if (tipoOponente.debilidad().contains(tipoAtacante)) {
         return 2
       } else {
         return 1

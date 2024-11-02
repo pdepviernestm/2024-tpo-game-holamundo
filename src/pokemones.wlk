@@ -49,8 +49,6 @@ class Pokemon {
   method recibirDanio(danio) {
   vida = (vida - danio).max(0)
   
-  // Mostrar el valor actual de vida
-  game.say(self, "Vida restante: " + vida.toString())
   }
 
   method agregarVida(nuevaVida) {
@@ -63,7 +61,7 @@ class Pokemon {
 
   // Método para elegir el ataque mayor efecto
   method elegirAtaque(pokemonOponente) {
-    const mejorAtaque = ataques.max({ataque => ataque.calcularEfecto(tipo, pokemonOponente.tipo())})
+    const mejorAtaque = ataques.max({ataque => ataque.calcularEfecto(self, pokemonOponente)})
     mejorAtaque.ejecutar(self, pokemonOponente)
  } 
 }
