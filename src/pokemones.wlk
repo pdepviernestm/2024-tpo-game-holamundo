@@ -6,7 +6,7 @@ import ataques.*
 class Pokemon {
   const nombre
   const property tipo
-  const ataques = []
+  const property ataques = []
 
   var property vida = 200
   var property side = "Frente"

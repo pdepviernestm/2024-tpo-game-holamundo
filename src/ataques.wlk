@@ -10,9 +10,9 @@ class Ataque {
     game.say(pokemonAtacante, "Ejecuta Ataque " + self.nombre())
     pokemonAtacante.irAtacar() // Semaforo para que se acerque a su oponente
     
+    game.schedule(100, {}) 
     const danioTotal = self.calcularEfecto(pokemonAtacante, pokemonOponente)
     pokemonOponente.recibirDanio(danioTotal)
-    
     // Mostrar el valor actual de vida
     game.say(pokemonOponente, "Vida restante: " + pokemonOponente.vida().toString())
     

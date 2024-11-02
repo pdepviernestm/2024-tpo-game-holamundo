@@ -1,41 +1,23 @@
 import wollok.game.* // Importa la biblioteca de juego
+import masterBatalla.*
 import pokemones.*
-import ataques.*
 import configuracionMenu.*
 
 program Estadio {
   game.height(50) // Alto del juego
   game.width(100) // Ancho del juego
   game.title("Estadio Pelea") // Título del juego
-  
+
   // Establece la imagen de fondo
   game.boardGround("FondoPelea.png")
-  const pokemonFrente = squirtle
-  const pokemonEspalda = charmander
-  pokemonEspalda.cambiarSide()
 
- // Posiciona los Pokémon en el escenario
-  game.addVisual(pokemonFrente)
-  game.addVisual(pokemonEspalda)
+  const mainBatalla = new ControladorDeBatalla (
+    equipoJugador = [squirtle, charmander, pikachu],
+    equipoComputadora = [totodile, tepig, shaymin])
 
-  // game.onCollideDo(pokemonEspalda, {otroPokemon => otroPokemon.cambiarPosicion() })
-
-  var turno = 1
-  keyboard.q().onPressDo({
-   if(turno == 1){
-     golpeSeco.ejecutar(pokemonFrente, pokemonEspalda)
-     turno = 0  // Cambia el turno al otro Pokémon
-     }
-   else {
-    //  golpeSeco.ejecutar(pokemonEspalda, pokemonFrente)
-     pokemonEspalda.elegirAtaque(pokemonFrente)
-     turno = 1 // Cambia el turno de regreso a pokemonFrente
-     }
-    })
-
+  mainBatalla.init()
   game.start() // Inicia el juego
 }
-
 
 
 
