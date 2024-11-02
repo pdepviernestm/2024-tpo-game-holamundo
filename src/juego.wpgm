@@ -1,33 +1,34 @@
 import wollok.game.* // Importa la biblioteca de juego
 import pokemones.*
+import ataques.*
 import configuracionMenu.*
 
 program Estadio {
-  game.height(60) // Alto del juego
-  game.width(120) // Ancho del juego
+  game.height(50) // Alto del juego
+  game.width(100) // Ancho del juego
   game.title("Estadio Pelea") // Título del juego
   
   // Establece la imagen de fondo
   game.boardGround("FondoPelea.png")
-  var pokemon1 = tepig
-  var pokemon2 = charmander
-  pokemon2.cambiarSide()
+  const pokemonFrente = tepig
+  const pokemonEspalda = charmander
+  pokemonEspalda.cambiarSide()
 
  // Posiciona los Pokémon en el escenario
-  game.addVisual(pokemon1)
-  game.addVisual(pokemon2)
+  game.addVisual(pokemonFrente)
+  game.addVisual(pokemonEspalda)
 
-  // game.onCollideDo(pokemon2, {otroPokemon => otroPokemon.cambiarPosicion() })
+  // game.onCollideDo(pokemonEspalda, {otroPokemon => otroPokemon.cambiarPosicion() })
 
   var turno = 1
-  keyboard.a().onPressDo({
+  keyboard.q().onPressDo({
    if(turno == 1){
-     pokemon1.golpeSeco(pokemon2)
+     golpeSeco.ejecutar(pokemonFrente, pokemonEspalda)
      turno = 0  // Cambia el turno al otro Pokémon
      }
    else {
-     pokemon2.golpeSeco(pokemon1)
-     turno = 1 // Cambia el turno de regreso a pokemon1
+     golpeSeco.ejecutar(pokemonEspalda, pokemonFrente)
+     turno = 1 // Cambia el turno de regreso a pokemonFrente
      }
     })
 
