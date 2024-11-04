@@ -8,7 +8,7 @@ class Pokemon {
   const property tipo
   const property ataques = []
 
-  var property vida = 200
+  var property vida = 20
   var property side = "Frente"
   var atacando = 0  // la idea es que funcionen como un semaforo para la posicion de objeto
   

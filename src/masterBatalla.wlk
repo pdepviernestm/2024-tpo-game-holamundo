@@ -62,27 +62,32 @@ class ControladorDeBatalla {
   method verificarEstado() {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
-
     if (pokemonJugador.vida() <= 0) {
       game.removeVisual(pokemonJugador)
       indexPokemonJugador += 1 
-      game.addVisual(self.pokemonActivoJugador())
-
+      if (indexPokemonJugador < equipoJugador.size()) {
+        game.addVisual(self.pokemonActivoJugador())
+      }
     }
     if (pokemonComputadora.vida() <= 0) {
       game.removeVisual(pokemonComputadora)
       indexPokemonComputadora += 1
-      game.addVisual(self.pokemonActivoComputadora())
+      if (indexPokemonComputadora < equipoComputadora.size()) {
+        game.addVisual(self.pokemonActivoComputadora())
+      }
     }
     if (self.equipoDerrotado()) {
-      game.say(game,"¡La batalla ha terminado! Ganador: " + self.determinarGanador())
-      game.stop()
-
       // Desactivar teclas al finalizar la batalla
       keyboard.a().onPressDo(null)
       keyboard.s().onPressDo(null)
       keyboard.d().onPressDo(null)
       keyboard.f().onPressDo(null)
+
+      game.say(game,"¡La batalla ha terminado! Ganador: " + self.determinarGanador())
+      if(self.determinarGanador() == "Equipo Computadora") game.addVisual(lose)
+      if(self.determinarGanador() == "Equipo Jugador") game.addVisual(win)
+
+      game.schedule(500, {game.stop()})
     } 
   }
 
@@ -99,4 +104,19 @@ class ControladorDeBatalla {
       return "Equipo Jugador"
     }
   }
+}
+
+object win {
+  const position = game.at(25,15)
+  
+  method position() = position
+  
+  method image() = "win.png"
+}
+object lose {
+  const position = game.at(25,15)
+  
+  method position() = position
+  
+  method image() = "lose.png"
 }
