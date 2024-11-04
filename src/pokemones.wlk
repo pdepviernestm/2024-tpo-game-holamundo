@@ -14,6 +14,8 @@ class Pokemon {
   
   method image() = nombre + side + ".png"
 
+  method nombre() = nombre
+
   method position (){
     if (atacando == 0){
       if (side == "Frente"){

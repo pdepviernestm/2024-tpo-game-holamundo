@@ -15,14 +15,14 @@ program Estadio {
     equipoJugador = [squirtle, charmander, pikachu],
     equipoComputadora = [totodile, tepig, shaymin])
 
-  mainBatalla.init()
+  mainBatalla.iniciar()
   game.start() // Inicia el juego
 }
 
 
 program menuGame {
-  game.width(80)
   game.height(60)
+  game.width(80)
   game.title("Menu")
   
   game.boardGround(menuInicio.image())
@@ -33,24 +33,3 @@ program menuGame {
   
   game.start() // Iniciar el juego
 }
-
-/*
-program elegirPokemon {
-  game.width(117)
-  game.height(60)
-  game.title("Menu Elegir Pokemon")
-  
-  game.boardGround(pokemonesElegir.image()) // Establece el fondo del menú
-  
-  // Crear un cuadrado y asociar un Pokémon
-  const cuadrado1 = new Cuadrado(posX = 10, posY = 10)
-  
-  cuadrado1.posicionarPokemonCuadrado(pikachu)
-  // Coloca el Pokémon en el cuadrado
-  
-  
-  cuadrado1.draw() // Dibuja el cuadrado
-  
-  game.start() // Inicia el juego
-}
-*/

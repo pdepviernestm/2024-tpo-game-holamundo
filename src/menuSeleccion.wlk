@@ -1,18 +1,21 @@
 import wollok.game.* // Importa la biblioteca de juego
+import masterBatalla.*
+import pokemones.*
+
 
 object pokemonesElegir {
   const position = game.center()
   // var selectedPokemons = [] // Para almacenar los Pokémon seleccionados
   var index = 0
   const listaPokemones = [
-    "Squirtle",
-    "Totodile",
-    "Charmander",
-    "Tepig",
-    "Pikachu",
-    "Shinx",
-    "Shaymin",
-    "Bulbasaur"
+    squirtle,
+    totodile,
+    charmander,
+    tepig,
+    pikachu,
+    shinx,
+    shaymin,
+    bulbasaur
   ] // Lista de Pokémon disponibles
 
   method position() = position
@@ -21,32 +24,51 @@ object pokemonesElegir {
 
   method mostrarListaPokemones() {
     // Muestra la lista de Pokémon disponibles
-    listaPokemones.forEach({pokemon =>  game.addVisual(self.crearPokemonVisual(pokemon))}) 
+    listaPokemones.forEach({pokemon =>  self.crearPokemonVisual(pokemon)}) 
   }
   
-  method crearPokemonVisual(nombre) {
+  method crearPokemonVisual(pokemon) {
     var posX 
     var posY 
 
     // Calcula las posiciones directamente basadas en el índice
     posX = 10 + (index % 4) * 15 // 4 Pokémon por fila, espaciados a 15
-    if (index >= 4){
-      posY = 30 
-    } else {
-      posY = 15 
-    }
+    posY = 15 
+    if (index >= 4) posY = 30 
 
     index = index + 1 // Incrementa el índice global
 
+    // Crear el cuadrado en la posición del Pokémon
+    const cuadrado = new Cuadrado(posX = posX, posY = posY)
+    game.addVisual(cuadrado)
+
+    // Ajusto el Pokemon dentro del Cuadrado
+    const offset = 3
+    posX = posX - offset 
+    posY = posY - offset 
+
     // Crear un objeto visual para el Pokémon
-    const aux = new PokemonVisual(nombre = nombre, posX = posX, posY = posY)
-    return aux
-    }
+    const aux = new PokemonVisual(nombre = pokemon.nombre(), posX = posX, posY = posY)
+    game.addVisual(aux)
+
+  }
   
   
-  method iniciarBatalla(nombrePokemon) {
-    // Aquí puedes iniciar la lógica de batalla con el Pokémon seleccionado
-    // Por ejemplo, crear un objeto ControladorDeBatalla y pasar el Pokémon seleccionado
+  method iniciarBatalla(equipoJugador, equipoComputadora) {
+    // Remover todas las visuales
+    // -----
+    
+    // Establece la imagen de fondo
+    game.boardGround("FondoPelea.png")
+
+    // Enviar los equipoos a batalla
+    const mainBatalla = new ControladorDeBatalla (
+      equipoJugador = equipoJugador,
+      equipoComputadora = equipoComputadora)
+      // equipoJugador = [squirtle, charmander, pikachu],
+      // equipoComputadora = [totodile, tepig, shaymin])
+
+    mainBatalla.iniciar()
   }
   
 }
@@ -61,7 +83,10 @@ class PokemonVisual {
   method position() = position
 
   method image() = nombre + "Frente" + ".png"
-       
+
+  // Método para mostrar el texto con el nombre del Pokémon
+  method text() = nombre
+
   method onPressDo() {
     // Lógica para seleccionar el Pokémon
     /*
@@ -82,17 +107,11 @@ class Cuadrado {
   const posX
   const posY
   
-  method posicionarPokemonCuadrado(pokemon) {
-    // Establece la posición del Pokémon en la misma posición que el cuadrado
-    pokemon.cambiarPosicion(posX, posY)
-    game.addVisual(pokemon) // Agrega el Pokémon a la visualización del juego
-  }
+  const position = game.at(posX, posY)
+      
+  method position() = position
   
   // Método que devuelve la imagen del cuadrado
   method image() = "cuadradoNaranja.png"
-  
-  // Método para dibujar el cuadrado
-  method draw() {
-    game.addVisual(self) // Añade el cuadrado al juego
-  }
+
 }

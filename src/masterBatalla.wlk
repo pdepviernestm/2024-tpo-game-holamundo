@@ -8,7 +8,7 @@ class ControladorDeBatalla {
   var indexPokemonJugador = 0 
   var indexPokemonComputadora = 0
 
-  method init() {
+  method iniciar() {
     // Cambia el lado de todos los Pokémon de la computadora
     equipoComputadora.forEach({ pokemon => pokemon.cambiarSide() })
 
