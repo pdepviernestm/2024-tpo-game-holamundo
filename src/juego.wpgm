@@ -1,7 +1,7 @@
 import wollok.game.* // Importa la biblioteca de juego
 import masterBatalla.*
 import pokemones.*
-import configuracionMenu.*
+import menuInicio.*
 
 program Estadio {
   game.height(50) // Alto del juego
@@ -20,32 +20,27 @@ program Estadio {
 }
 
 
-
 program menuGame {
   game.width(80)
   game.height(60)
   game.title("Menu")
   
-  
   game.boardGround(menuInicio.image())
   
   game.addVisual(botonStart)
-  
   
   keyboard.enter().onPressDo({ botonStart.mostrarPokemonesElegir() })
   
   game.start() // Iniciar el juego
 }
 
+/*
 program elegirPokemon {
   game.width(117)
   game.height(60)
   game.title("Menu Elegir Pokemon")
   
   game.boardGround(pokemonesElegir.image()) // Establece el fondo del menú
-  
-  
-  
   
   // Crear un cuadrado y asociar un Pokémon
   const cuadrado1 = new Cuadrado(posX = 10, posY = 10)
@@ -58,3 +53,4 @@ program elegirPokemon {
   
   game.start() // Inicia el juego
 }
+*/
