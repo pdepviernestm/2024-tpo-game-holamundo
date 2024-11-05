@@ -19,15 +19,12 @@ program Estadio {
   game.start() // Inicia el juego
 }
 
-
 program menuGame {
   game.height(60)
   game.width(80)
   game.title("Menu")
   
   game.boardGround(menuInicio.image())
-  
-  game.addVisual(botonStart)
   
   keyboard.enter().onPressDo({ botonStart.mostrarPokemonesElegir() })
   
