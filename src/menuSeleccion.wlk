@@ -5,7 +5,7 @@ import pokemones.*
 
 object pokemonesElegir {
   const position = game.center()
-  // var selectedPokemons = [] // Para almacenar los Pokémon seleccionados
+  var selectedPokemons = [] // Para almacenar los Pokémon seleccionados
   var index = 0
   const listaPokemones = [
     squirtle,
@@ -57,6 +57,19 @@ object pokemonesElegir {
     game.addVisual(auxNombre)
 
   }
+/*
+  method seleccionarPokemon(id) {
+    if (id >= 0 && id < listaPokemones.size()) {
+      const pokemonSeleccionado = listaPokemones[id]
+      if (selectedPokemons.size() < 3 && !selectedPokemons.contains(pokemonSeleccionado.nombre())) {
+        selectedPokemons.add(pokemonSeleccionado.nombre())
+        game.say(game, "Has elegido " + pokemonSeleccionado.nombre())
+      } else {
+        game.say(game, "Ya seleccionaste 3 Pokémon o este Pokémon ya fue elegido.")
+      }
+      }
+  }
+*/
   
   
   method iniciarBatalla(equipoJugador, equipoComputadora) {
@@ -111,13 +124,22 @@ class Cuadrado {
   // Propiedades
   const posX
   const posY
+  var colorImagen = "cuadradoNaranja2.png"
   
   const position = game.at(posX, posY)
       
   method position() = position
   
   // Método que devuelve la imagen del cuadrado
-  method image() = "cuadradoNaranja2.png"
+  method image() = colorImagen
+
+  method cambiarColor() {
+    if(colorImagen == "cuadradoNaranja2.png") {
+      colorImagen = "cuadradoAzul.png"
+    } else{
+      colorImagen = "cuadradoNaranja2.png"
+    }
+  }
 
 }
 
@@ -131,5 +153,5 @@ class Nombre{
   method position() = position
   
   // Método que devuelve la imagen del cuadrado
-  method image() = "NombrePikachu.png"
+  method image() = "Nombre" + nombre +".png"
 }
