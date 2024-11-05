@@ -16,6 +16,7 @@ program Estadio {
     equipoComputadora = [totodile, tepig, shaymin]
   )
   
+  
   mainBatalla.iniciar()
   game.start() // Inicia el juego
 }
