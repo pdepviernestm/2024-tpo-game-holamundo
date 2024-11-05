@@ -43,14 +43,18 @@ object pokemonesElegir {
     const cuadrado = new Cuadrado(posX = posX, posY = posY)
     game.addVisual(cuadrado)
 
-    // Ajusto el Pokemon dentro del Cuadrado
-    const offset = 3
-    posX = posX - offset 
-    posY = posY - offset 
 
     // Crear un objeto visual para el Pokémon
     const aux = new PokemonVisual(nombre = pokemon.nombre(), posX = posX, posY = posY)
     game.addVisual(aux)
+
+    // Ajusto el Pokemon dentro del Cuadrado
+    const offset = 5
+    posX = posX - offset 
+    posY = posY - offset 
+
+    const auxNombre = new Nombre(nombre = pokemon.nombre(), posX = posX, posY = posY)
+    game.addVisual(auxNombre)
 
   }
   
@@ -86,7 +90,7 @@ class PokemonVisual {
   method image() = nombre + "Frente" + ".png"
 
   // Método para mostrar el texto con el nombre del Pokémon
-  method text() = nombre
+  // method text() = nombre
 
   method onPressDo() {
     // Lógica para seleccionar el Pokémon
@@ -113,6 +117,19 @@ class Cuadrado {
   method position() = position
   
   // Método que devuelve la imagen del cuadrado
-  method image() = "cuadradoNaranja.png"
+  method image() = "cuadradoNaranja2.png"
 
+}
+
+class Nombre{
+  const posX
+  const posY
+  const nombre
+  
+  const position = game.at(posX, posY)
+      
+  method position() = position
+  
+  // Método que devuelve la imagen del cuadrado
+  method image() = "NombrePikachu.png"
 }
