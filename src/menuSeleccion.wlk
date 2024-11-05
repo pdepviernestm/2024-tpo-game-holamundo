@@ -20,7 +20,8 @@ object pokemonesElegir {
 
   method position() = position
   
-  method image() = "fondo_elegir_pokemon.jpg"
+  // method image() = "fondo_elegir_pokemon.jpg"
+  method image() = "FondoPelea.png"
 
   method mostrarListaPokemones() {
     // Muestra la lista de Pokémon disponibles
@@ -42,16 +43,33 @@ object pokemonesElegir {
     const cuadrado = new Cuadrado(posX = posX, posY = posY)
     game.addVisual(cuadrado)
 
-    // Ajusto el Pokemon dentro del Cuadrado
-    const offset = 3
-    posX = posX - offset 
-    posY = posY - offset 
 
     // Crear un objeto visual para el Pokémon
     const aux = new PokemonVisual(nombre = pokemon.nombre(), posX = posX, posY = posY)
     game.addVisual(aux)
 
+    // Ajusto el Pokemon dentro del Cuadrado
+    const offset = 5
+    posX = posX - offset 
+    posY = posY - offset 
+
+    const auxNombre = new Nombre(nombre = pokemon.nombre(), posX = posX, posY = posY)
+    game.addVisual(auxNombre)
+
   }
+/*
+  method seleccionarPokemon(id) {
+    if (id >= 0 && id < listaPokemones.size()) {
+      const pokemonSeleccionado = listaPokemones[id]
+      if (selectedPokemons.size() < 3 && !selectedPokemons.contains(pokemonSeleccionado.nombre())) {
+        selectedPokemons.add(pokemonSeleccionado.nombre())
+        game.say(game, "Has elegido " + pokemonSeleccionado.nombre())
+      } else {
+        game.say(game, "Ya seleccionaste 3 Pokémon o este Pokémon ya fue elegido.")
+      }
+      }
+  }
+*/
   
   
   method iniciarBatalla(equipoJugador, equipoComputadora) {
@@ -85,7 +103,7 @@ class PokemonVisual {
   method image() = nombre + "Frente" + ".png"
 
   // Método para mostrar el texto con el nombre del Pokémon
-  method text() = nombre
+  // method text() = nombre
 
   method onPressDo() {
     // Lógica para seleccionar el Pokémon
@@ -106,12 +124,34 @@ class Cuadrado {
   // Propiedades
   const posX
   const posY
+  var colorImagen = "cuadradoNaranja2.png"
   
   const position = game.at(posX, posY)
       
   method position() = position
   
   // Método que devuelve la imagen del cuadrado
-  method image() = "cuadradoNaranja.png"
+  method image() = colorImagen
 
+  method cambiarColor() {
+    if(colorImagen == "cuadradoNaranja2.png") {
+      colorImagen = "cuadradoAzul.png"
+    } else{
+      colorImagen = "cuadradoNaranja2.png"
+    }
+  }
+
+}
+
+class Nombre{
+  const posX
+  const posY
+  const nombre
+  
+  const position = game.at(posX, posY)
+      
+  method position() = position
+  
+  // Método que devuelve la imagen del cuadrado
+  method image() = "Nombre" + nombre +".png"
 }
