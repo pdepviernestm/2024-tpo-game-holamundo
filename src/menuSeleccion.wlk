@@ -5,7 +5,7 @@ import pokemones.*
 
 object pokemonesElegir {
   const position = game.center()
-  var selectedPokemons = [] // Para almacenar los Pokémon seleccionados
+  // var selectedPokemons = [] // Para almacenar los Pokémon seleccionados
   var index = 0
   const listaPokemones = [
     squirtle,
