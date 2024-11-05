@@ -131,5 +131,5 @@ class Nombre{
   method position() = position
   
   // Método que devuelve la imagen del cuadrado
-  method image() = "NombrePikachu.png"
+  method image() = "Nombre" + nombre + ".png"
 }
