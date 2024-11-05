@@ -9,9 +9,7 @@ class ControladorDeBatalla {
   var indexPokemonComputadora = 0
 
   method iniciar() {
-    // Cambia el lado de todos los Pokémon de la computadora
     equipoComputadora.forEach({ pokemon => pokemon.cambiarSide() })
-
     self.configurarTeclasAtaque()
     game.addVisual(self.pokemonActivoJugador())
     game.addVisual(self.pokemonActivoComputadora())
@@ -22,12 +20,6 @@ class ControladorDeBatalla {
     return equipoJugador.get(indexPokemonJugador)
   }
 
-  // Devuelve el Pokémon activo del equipo de la computadora
-  method pokemonActivoComputadora() {
-    return equipoComputadora.get(indexPokemonComputadora)
-  }
-
-  // Configura teclas para los ataques del Pokémon controlado por el jugador
   method configurarTeclasAtaque() {
     keyboard.a().onPressDo({ self.ejecutarAtaqueJugador(0) })
     keyboard.s().onPressDo({ self.ejecutarAtaqueJugador(1) })
@@ -35,7 +27,6 @@ class ControladorDeBatalla {
     keyboard.f().onPressDo({ self.ejecutarAtaqueJugador(3) })
   }
 
-  // Ejecuta el ataque elegido por el jugador
   method ejecutarAtaqueJugador(indiceAtaque) {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
@@ -47,7 +38,6 @@ class ControladorDeBatalla {
     }
   }
 
-  // Turno automático de la computadora
   method turnoComputadora() {
     const pokemonComputadora = self.pokemonActivoComputadora()
     const pokemonJugador = self.pokemonActivoJugador()
@@ -58,13 +48,12 @@ class ControladorDeBatalla {
     }
   }
 
-  // Verifica si alguno de los Pokémon fue derrotado y avanza en la lista
   method verificarEstado() {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
     if (pokemonJugador.vida() <= 0) {
       game.removeVisual(pokemonJugador)
-      indexPokemonJugador += 1 
+      indexPokemonJugador += 1
       if (indexPokemonJugador < equipoJugador.size()) {
         game.addVisual(self.pokemonActivoJugador())
       }
@@ -77,7 +66,6 @@ class ControladorDeBatalla {
       }
     }
     if (self.equipoDerrotado()) {
-      // Desactivar teclas al finalizar la batalla
       keyboard.a().onPressDo(null)
       keyboard.s().onPressDo(null)
       keyboard.d().onPressDo(null)
@@ -91,12 +79,8 @@ class ControladorDeBatalla {
     } 
   }
 
-  // Verifica si alguno de los equipos ha sido derrotado
-  method equipoDerrotado() {
-    return indexPokemonJugador >= equipoJugador.size() || indexPokemonComputadora >= equipoComputadora.size()
-  }
-
-  // Determina el equipo ganador
+  method equipoDerrotado() = (indexPokemonJugador >= equipoJugador.size()) || (indexPokemonComputadora >= equipoComputadora.size())
+  
   method determinarGanador() {
     if (indexPokemonJugador >= equipoJugador.size()) {
       return "Equipo Computadora"
