@@ -62,7 +62,7 @@ object curarse inherits Ataque (nombre = "curarse", danioBase = 0) {
 object burbuja inherits Ataque (nombre = "Burbuja", danioBase = 10) {}
 object hidrobomba inherits Ataque (nombre = "Hidrobomba", danioBase = 25) {}
 object mordisco inherits Ataque (nombre = "mordisco", danioBase = 12) {}
-object chorroAgua inherits Ataque (nombre = "mordisco", danioBase = 18) {}
+object chorroAgua inherits Ataque (nombre = "chorroAgua", danioBase = 18) {}
 
 // Ataques de tipo Fuego
 object lanzallamas inherits Ataque(nombre = "Lanzallamas", danioBase = 20) {}

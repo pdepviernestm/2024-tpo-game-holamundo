@@ -54,7 +54,7 @@ class Pokemon {
   }
 
   method agregarVida(nuevaVida) {
-    vida = vida + nuevaVida
+    vida = (vida + nuevaVida).min(100)
   }
   
   method terminarTurno() {
@@ -65,7 +65,7 @@ class Pokemon {
   method elegirAtaque(pokemonOponente) {
     const mejorAtaque = ataques.max({ataque => ataque.calcularEfecto(self, pokemonOponente)})
     mejorAtaque.ejecutar(self, pokemonOponente)
- } 
+  } 
 }
 
 /* Agua */

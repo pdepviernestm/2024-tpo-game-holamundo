@@ -20,7 +20,8 @@ object pokemonesElegir {
 
   method position() = position
   
-  method image() = "fondo_elegir_pokemon.jpg"
+  // method image() = "fondo_elegir_pokemon.jpg"
+  method image() = "FondoPelea.png"
 
   method mostrarListaPokemones() {
     // Muestra la lista de Pokémon disponibles
