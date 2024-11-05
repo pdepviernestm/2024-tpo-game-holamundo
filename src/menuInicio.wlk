@@ -11,7 +11,7 @@ object menuInicio {
 
 object botonStart {
   method mostrarPokemonesElegir() {
-    game.removeVisual(self) // Elimina el botón
+    game.removeVisual(menuInicio)
     game.boardGround(pokemonesElegir.image())
     
     pokemonesElegir.mostrarListaPokemones()
