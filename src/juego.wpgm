@@ -26,8 +26,9 @@ program menuGame {
   game.title("Menu")
   
   game.boardGround(menuInicio.image())
+  // game.boardGround("FondoPelea.png")
   
-  keyboard.enter().onPressDo({ botonStart.mostrarPokemonesElegir() })
+  keyboard.space().onPressDo({ botonStart.mostrarPokemonesElegir() })
   
   game.start() // Iniciar el juego
 }

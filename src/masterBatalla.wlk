@@ -87,7 +87,7 @@ class ControladorDeBatalla {
       if(self.determinarGanador() == "Equipo Computadora") game.addVisual(lose)
       if(self.determinarGanador() == "Equipo Jugador") game.addVisual(win)
 
-      game.schedule(500, {game.stop()})
+      game.schedule(100, {game.stop()})
     } 
   }
 
