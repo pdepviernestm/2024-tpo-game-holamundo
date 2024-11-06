@@ -4,17 +4,19 @@ import ataques.*
 import tipos.*
 
 class ControladorDeBatalla {
-  const equipoJugador = []
-  const equipoComputadora = []
-  var indexPokemonJugador = 0
+  const equipoJugador
+  const equipoComputadora
+  var indexPokemonJugador = 0 
   var indexPokemonComputadora = 0
-  
+
+  // Método para iniciar el juego y configurar todo
   method iniciar() {
-    // Cambia el lado de todos los Pokémon de la computadora
     equipoComputadora.forEach({ pokemon => pokemon.cambiarSide() })
     
     game.addVisual(self.pokemonActivoJugador())
     game.addVisual(self.pokemonActivoComputadora())
+    self.actualizarImagenVidaJugador()
+    self.actualizarImagenVidaComputadora()
     self.agregarTeclasAtaques()
     game.addVisual(teclasAtaques)
     self.configurarTeclasAtaque()
@@ -24,11 +26,10 @@ class ControladorDeBatalla {
   method pokemonActivoJugador() = equipoJugador.get(indexPokemonJugador)
   
   // Devuelve el Pokémon activo del equipo de la computadora
-  method pokemonActivoComputadora() = equipoComputadora.get(
-    indexPokemonComputadora
-  )
-  
-  // Configura teclas para los ataques del Pokémon controlado por el jugador
+  method pokemonActivoComputadora() {
+    return equipoComputadora.get(indexPokemonComputadora)
+  }
+
   method configurarTeclasAtaque() {
     keyboard.a().onPressDo({ self.ejecutarAtaqueJugador(0) })
     keyboard.s().onPressDo({ self.ejecutarAtaqueJugador(1) })
@@ -54,7 +55,7 @@ class ControladorDeBatalla {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
     
-    if (pokemonJugador.vida() > 0) {
+    if (pokemonJugador.vida() > 0 && indiceAtaque < pokemonJugador.ataques().size()) {
       const ataque = pokemonJugador.ataques().get(indiceAtaque)
       ataque.ejecutar(pokemonJugador, pokemonComputadora)
       const cuadroAtaque = object {
@@ -64,11 +65,14 @@ class ControladorDeBatalla {
       game.addVisual(cuadroAtaque)
       game.schedule(1500, { game.removeVisual(cuadroAtaque) })
       self.verificarEstado()
+      self.actualizarImagenVidaJugador()
+      self.actualizarImagenVidaComputadora()
       game.schedule(2000, { self.turnoComputadora() })
+    } else {
+      game.removeVisual(vidaJugador) 
     }
   }
-  
-  // Turno automático de la computadora
+
   method turnoComputadora() {
     const pokemonComputadora = self.pokemonActivoComputadora()
     const pokemonJugador = self.pokemonActivoJugador()
@@ -83,6 +87,10 @@ class ControladorDeBatalla {
       game.addVisual(cuadroAtaque)
       game.schedule(1500, { game.removeVisual(cuadroAtaque) })
       self.verificarEstado()
+      self.actualizarImagenVidaJugador()
+      self.actualizarImagenVidaComputadora()
+    }else {
+      game.removeVisual(vidaComputadora) 
     }
   }
   
@@ -90,6 +98,7 @@ class ControladorDeBatalla {
   method verificarEstado() {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
+    
     if (pokemonJugador.vida() <= 0) {
       game.removeVisual(pokemonJugador)
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
@@ -99,6 +108,7 @@ class ControladorDeBatalla {
         self.agregarTeclasAtaques()
       }
     }
+    
     if (pokemonComputadora.vida() <= 0) {
       game.removeVisual(pokemonComputadora)
       indexPokemonComputadora += 1
@@ -106,6 +116,7 @@ class ControladorDeBatalla {
           self.pokemonActivoComputadora()
         )
     }
+    
     if (self.equipoDerrotado()) {
       // Desactivar teclas al finalizar la batalla
       self.desactivarTeclas()
@@ -141,6 +152,43 @@ class ControladorDeBatalla {
       return "Equipo Jugador"
     }
   }
+  
+  method actualizarImagenVida(pokemon) {
+    const nuevaImagenVida = self.obtenerImagenVida(pokemon.vida())
+    if (pokemon.side() == "Frente") {
+      game.removeVisual(vidaJugador)
+      vidaJugador.setImage(nuevaImagenVida)
+      game.addVisual(vidaJugador)
+    } else {
+      game.removeVisual(vidaComputadora)
+      vidaComputadora.setImage(nuevaImagenVida)
+      game.addVisual(vidaComputadora)
+    }
+  }
+
+  method actualizarImagenVidaJugador() {
+    self.actualizarImagenVida(self.pokemonActivoJugador())
+  }
+  
+  method actualizarImagenVidaComputadora() {
+    self.actualizarImagenVida(self.pokemonActivoComputadora())
+  }
+  
+  method obtenerImagenVida(vida) { 
+    if (vida == 100) {
+      return "100_vida.png"
+    } else if (vida >= 80) {
+      return "80_vida.png"
+    } else if (vida >= 60) {
+      return "60_vida.png"
+    } else if (vida >= 40) {
+      return "40_vida.png"
+    } else if (vida > 0) {
+      return "20_vida.png"
+    } else (vida <= 0) {
+      return "0_vida.png"
+    }
+  }
 }
 
 object win {
@@ -157,4 +205,30 @@ object lose {
   method position() = position
   
   method image() = "lose.png"
+}
+
+object vidaJugador {
+  const position = game.at(64, 32)
+  var image = "100_vida.png"
+  
+  method position() = position
+  
+  method image() = image
+  
+  method setImage(newImage) {
+    image = newImage
+  }
+}
+
+object vidaComputadora {
+  const position = game.at(31, 21)
+  var image = "100_vida.png"
+  
+  method position() = position
+  
+  method image() = image
+  
+  method setImage(newImage) {
+    image = newImage
+  }
 }
