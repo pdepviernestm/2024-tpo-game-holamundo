@@ -78,7 +78,6 @@ class ControladorDeBatalla {
     const pokemonJugador = self.pokemonActivoJugador()
     
     if (pokemonComputadora.vida() > 0) {
-      pokemonComputadora.elegirAtaque(pokemonJugador)
       const ataque = pokemonComputadora.elegirAtaque(pokemonJugador)
       const cuadroAtaque = object {
         const property position = game.at(25, 35)
@@ -89,8 +88,6 @@ class ControladorDeBatalla {
       self.verificarEstado()
       self.actualizarImagenVidaJugador()
       self.actualizarImagenVidaComputadora()
-    }else {
-      game.removeVisual(vidaComputadora) 
     }
   }
   
@@ -101,6 +98,7 @@ class ControladorDeBatalla {
     
     if (pokemonJugador.vida() <= 0) {
       game.removeVisual(pokemonJugador)
+      game.removeVisual(vidaJugador)
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
       indexPokemonJugador += 1
       if (indexPokemonJugador < equipoJugador.size()) {
@@ -111,6 +109,7 @@ class ControladorDeBatalla {
     
     if (pokemonComputadora.vida() <= 0) {
       game.removeVisual(pokemonComputadora)
+      game.removeVisual(vidaComputadora)
       indexPokemonComputadora += 1
       if (indexPokemonComputadora < equipoComputadora.size()) game.addVisual(
           self.pokemonActivoComputadora()
