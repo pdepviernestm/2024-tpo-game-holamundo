@@ -3,33 +3,8 @@ import masterBatalla.*
 import pokemones.*
 import menuInicio.*
 
-program Estadio {
-  game.height(50) // Alto del juego
-  game.width(100) // Ancho del juego
-  game.title("Estadio Pelea") // Título del juego
-  
-  // Establece la imagen de fondo
-  game.boardGround("FondoPelea.png")
-  
-  const mainBatalla = new ControladorDeBatalla(
-    equipoJugador = [squirtle, charmander, pikachu],
-    equipoComputadora = [totodile, tepig, shaymin]
-  )
-  
-  
-  mainBatalla.iniciar()
-  game.start() // Inicia el juego
-}
-
 program menuGame {
-  game.height(50)
-  game.width(100)
-  game.title("Menu")
+  menuInicio.iniciar() // Iniciar el juego
   
-  game.boardGround(menuInicio.image())
-  // game.boardGround("FondoPelea.png")
-  
-  keyboard.space().onPressDo({ botonStart.mostrarPokemonesElegir() })
-  
-  game.start() // Iniciar el juego
+  game.start() 
 }

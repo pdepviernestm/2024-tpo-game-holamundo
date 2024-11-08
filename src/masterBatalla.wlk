@@ -26,9 +26,7 @@ class ControladorDeBatalla {
   method pokemonActivoJugador() = equipoJugador.get(indexPokemonJugador)
   
   // Devuelve el Pokémon activo del equipo de la computadora
-  method pokemonActivoComputadora() {
-    return equipoComputadora.get(indexPokemonComputadora)
-  }
+  method pokemonActivoComputadora() = equipoComputadora.get(indexPokemonComputadora)
 
   method configurarTeclasAtaque() {
     keyboard.a().onPressDo({ self.ejecutarAtaqueJugador(0) })
@@ -59,7 +57,7 @@ class ControladorDeBatalla {
       const ataque = pokemonJugador.ataques().get(indiceAtaque)
       ataque.ejecutar(pokemonJugador, pokemonComputadora)
       const cuadroAtaque = object {
-        const property position = game.at(25, 35)
+        const property position = game.at(10, 35)
         method image() = "cuadro" + ataque.nombreImagen()
       }
       game.addVisual(cuadroAtaque)
@@ -85,6 +83,7 @@ class ControladorDeBatalla {
       }
       game.addVisual(cuadroAtaque)
       game.schedule(1500, { game.removeVisual(cuadroAtaque) })
+      
       self.verificarEstado()
       self.actualizarImagenVidaJugador()
       self.actualizarImagenVidaComputadora()
@@ -122,10 +121,6 @@ class ControladorDeBatalla {
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
       game.removeVisual(teclasAtaques)
       
-      game.say(
-        game,
-        "¡La batalla ha terminado! Ganador: " + self.determinarGanador()
-      )
       if (self.determinarGanador() == "Equipo Computadora") game.addVisual(lose)
       if (self.determinarGanador() == "Equipo Jugador") game.addVisual(win)
       
