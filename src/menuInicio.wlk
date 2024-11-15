@@ -8,7 +8,7 @@ object menuInicio {
 
     game.addVisual(botonStart)
 
-    keyboard.space().onPressDo({ botonStart.mostrarPokemonesElegir() })
+    keyboard.enter().onPressDo({ botonStart.mostrarPokemonesElegir() })
   }
 
   method configGame() {

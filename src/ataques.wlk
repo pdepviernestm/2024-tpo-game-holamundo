@@ -10,14 +10,11 @@ class Ataque {
 
   // Método que cada ataque debe implementar
   method ejecutar(pokemonAtacante, pokemonOponente) {
-    game.say(pokemonAtacante, "Ejecuta Ataque " + self.nombre())
     pokemonAtacante.irAtacar() // Semaforo para que se acerque a su oponente
     
     game.schedule(100, {}) 
     const danioTotal = self.calcularEfecto(pokemonAtacante, pokemonOponente)
     pokemonOponente.recibirDanio(danioTotal)
-    // Mostrar el valor actual de vida
-    game.say(pokemonOponente, "Vida restante: " + pokemonOponente.vida().toString())
     
     /* Aca podriamos meter visuales */
     // game.say(pokemonOponente, "AUCH") 
@@ -66,7 +63,7 @@ object curarse inherits Ataque (nombre = "curarse", danioBase = 0, nombreImagen 
     override method ejecutar(pokemonAtacante, pokemonOponente) {
     pokemonAtacante.agregarVida(20) 
     /* Aca podriamos meter visuales */
-    game.say(pokemonAtacante, "¡Me estoy recuperando!")
+
     }
     /* mientras menos vida tiene mas puntos da el calcular efecto */
     override method calcularEfecto(pokemonAtacante, pokemonOponente) = 1000 / pokemonAtacante.vida() 

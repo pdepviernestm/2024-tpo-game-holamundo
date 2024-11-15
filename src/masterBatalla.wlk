@@ -186,7 +186,7 @@ class ControladorDeBatalla {
 }
 
 object win {
-  const position = game.at(25, 15)
+  const position = game.at(35, 20)
   
   method position() = position
   
@@ -194,7 +194,7 @@ object win {
 }
 
 object lose {
-  const position = game.at(25, 15)
+  const position = game.at(35, 20)
   
   method position() = position
   
