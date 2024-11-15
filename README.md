@@ -7,13 +7,14 @@
 - Marcos Silva
 - Matias Nuñez
 
-## Capturas
+## Menu Inicio Batalla Pokemon
 
-(agregar)
+![Menu Inicio](assets\FondoInicio2.png)
+
 
 ## Reglas de Juego / Instrucciones
 
-### El juego es sencillo, simula una batalla de pokemones en el cual tendremos que elegir 3 pokemones para nosotros y otros 3 para la máquina. Al iniciar el escenario de batalla simpre comenzamos nosotros con 4 ataques disponibles que pueden ser: 
+ El juego es sencillo, simula una batalla de pokemones en el cual tendremos que elegir 3 pokemones para nosotros y otros 3 para la máquina. Al iniciar el escenario de batalla simpre comenzamos nosotros con 4 ataques disponibles que pueden ser: 
 
 - Golpe Seco: Es una ataque default para todos los pokemones que no pertenece a ningun elemento.
 
@@ -28,10 +29,12 @@ Cada pokemon posee un turno para atacar, en el caso de la máquina realiza el at
 ### Tipos de elementos de pokemones:
 Para no complejizar de mas el game, decidimos optar por 4 tipos de elementos para los pokemones siendo estos tipo Planta, Agua, Fuego y Eléctrico.
 
+![Imagen elementos](Elementos.png)
+
 ### Daños a elementos:
 Debemos aclarar que los daños que pueden inflingir los pokemones con sus ataques depende puramente del elemento del mismo y del rival.
 A continuación veremos los daños críticos, normal y débil que se pueden tener:
-
+![Tabla elementos](assets\tablaAtaques.png)
 
 ## Otros
 
