@@ -114,6 +114,9 @@ object pokemonesElegir {
     if (id >= 0 && id < listaPokemones.size()) {
       const pokemonSeleccionado = listaPokemones.get(id)
 
+      // Reproducir sonido de selección
+        const seleccionSound = game.sound("sound_selection.mp3")
+        seleccionSound.play()
       // Verifica si el Pokémon ya está en el equipo visualizado y añade a las listas
       if (equipoJugador.size() < 3 && !equipoJugador.contains(pokemonSeleccionado)) {
         equipoJugador.add(pokemonSeleccionado)

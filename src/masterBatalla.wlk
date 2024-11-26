@@ -9,8 +9,17 @@ class ControladorDeBatalla {
   var indexPokemonJugador = 0 
   var indexPokemonComputadora = 0
 
+
+  // Define la música de fondo
+  const musicaFondo = game.sound("Pokemon_batalla_sound.mp3")
+
   // Método para iniciar el juego y configurar todo
   method iniciar() {
+
+    // Configurar la música de fondo
+    musicaFondo.shouldLoop(true)
+    musicaFondo.play()
+
     equipoComputadora.forEach({ pokemon => pokemon.cambiarSide() })
     
     game.addVisual(self.pokemonActivoJugador())
@@ -22,6 +31,11 @@ class ControladorDeBatalla {
     self.configurarTeclasAtaque()
   }
   
+   // Método para detener la música de fondo al finalizar la batalla
+  method finalizarBatalla() {
+    musicaFondo.stop() // Detiene la música de fondo
+  }
+
   // Devuelve el Pokémon activo del equipo del jugador
   method pokemonActivoJugador() = equipoJugador.get(indexPokemonJugador)
   
@@ -53,6 +67,10 @@ class ControladorDeBatalla {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
     
+    // Reproducir sonido del ataque
+    const ataqueSound = game.sound("sound_golpe.mp3")
+    ataqueSound.play()
+
     if (pokemonJugador.vida() > 0 && indiceAtaque < pokemonJugador.ataques().size()) {
       const ataque = pokemonJugador.ataques().get(indiceAtaque)
       ataque.ejecutar(pokemonJugador, pokemonComputadora)
@@ -74,6 +92,10 @@ class ControladorDeBatalla {
   method turnoComputadora() {
     const pokemonComputadora = self.pokemonActivoComputadora()
     const pokemonJugador = self.pokemonActivoJugador()
+    
+    // Reproducir sonido del ataque
+    const ataqueSound = game.sound("sound_golpe.mp3")
+    ataqueSound.play()
     
     if (pokemonComputadora.vida() > 0) {
       const ataque = pokemonComputadora.elegirAtaque(pokemonJugador)
@@ -121,8 +143,15 @@ class ControladorDeBatalla {
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
       game.removeVisual(teclasAtaques)
       
+      const winloseSound = game.sound("Win_sound.mp3")
+
       if (self.determinarGanador() == "Equipo Computadora") game.addVisual(lose)
-      if (self.determinarGanador() == "Equipo Jugador") game.addVisual(win)
+      if (self.determinarGanador() == "Equipo Jugador") game.addVisual(win) 
+
+      winloseSound.play()
+
+      // Detener la música de fondo
+      self.finalizarBatalla()
       
       game.schedule(1500, { game.stop() })
     }
