@@ -4,59 +4,38 @@ import ataques.*
 
 
 class Pokemon {
-  const nombre
+  const property nombre
   const property tipo
-  var property vida = 100
   const property ataques = []
-
-  var property side = "Frente"
+  var property vida = 100
+  var property side = "Frente"   // Lado del Pokémon "Frente" o "Espalda"
   var atacando = false
   
   method image() = (nombre + side) + ".png"
   
-  method nombre() = nombre
-  
+  // Retorna las posiciones según el contexto
   method posicionLejos() = game.at(60, 20)
-
   method posicionCerca() = game.at(25, 8)
+  method position() = if (atacando == (side == "Frente")) self.posicionCerca() else self.posicionLejos()
+  
+  // Cambia el lado del Pokémon entre "Frente" y "Espalda"
+  method cambiarSide() { side = if (side == "Frente") "Espalda" else "Frente" }
+  
+  // Cambia el estado de ataque
+  method irAtacar() { atacando = true }
+  method volverDeAtacar() { atacando = false }
 
-  method position() {
-    if (side == "Frente") {
-      return if(atacando) self.posicionCerca() else self.posicionLejos()
-    } else {
-      return if(atacando) self.posicionLejos() else self.posicionCerca()
-    }
-  }
+  // Manejo de vida
+  method recibirDanio(danio) { vida = (vida - danio).max(0) }
+  method agregarVida(nuevaVida) { vida = (vida + nuevaVida).min(100) }
   
-  method cambiarSide() {
-    side = if (side == "Frente") "Espalda" else "Frente"
-  }
-  
-  method irAtacar() {
-    atacando = true
-  }
-  
-  method volverDeAtacar() {
-    atacando = false
-  }
-  
-  method recibirDanio(danio) {
-    vida = (vida - danio).max(0)
-  }
-  
-  method agregarVida(nuevaVida) {
-    vida += nuevaVida
-  }
-  
-  // Método para elegir el ataque mayor efecto
+  // Selección del ataque más efectivo
   method elegirAtaque(pokemonOponente) {
-    const mejorAtaque = ataques.max(
-      { ataque => ataque.calcularEfecto(self, pokemonOponente) }
-    )
+    const mejorAtaque = ataques.max({ ataque => ataque.calcularEfecto(self, pokemonOponente) })
     mejorAtaque.ejecutar(self, pokemonOponente)
     return mejorAtaque
   }
-} 
+}
 
 /* Agua */
 object squirtle inherits Pokemon (
