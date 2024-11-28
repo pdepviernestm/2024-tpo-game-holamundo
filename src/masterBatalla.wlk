@@ -67,9 +67,6 @@ class ControladorDeBatalla {
     const pokemonJugador = self.pokemonActivoJugador()
     const pokemonComputadora = self.pokemonActivoComputadora()
     
-    // Reproducir sonido del ataque
-    const ataqueSound = game.sound("sound_golpe.mp3")
-    ataqueSound.play()
 
     if (pokemonJugador.vida() > 0 && indiceAtaque < pokemonJugador.ataques().size()) {
       const ataque = pokemonJugador.ataques().get(indiceAtaque)
@@ -93,9 +90,6 @@ class ControladorDeBatalla {
     const pokemonComputadora = self.pokemonActivoComputadora()
     const pokemonJugador = self.pokemonActivoJugador()
     
-    // Reproducir sonido del ataque
-    const ataqueSound = game.sound("sound_golpe.mp3")
-    ataqueSound.play()
     
     if (pokemonComputadora.vida() > 0) {
       const ataque = pokemonComputadora.elegirAtaque(pokemonJugador)
