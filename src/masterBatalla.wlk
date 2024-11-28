@@ -26,14 +26,15 @@ class ControladorDeBatalla {
     game.addVisual(self.pokemonActivoComputadora())
     self.actualizarImagenVidaJugador()
     self.actualizarImagenVidaComputadora()
+
     self.agregarTeclasAtaques()
     game.addVisual(teclasAtaques)
     self.configurarTeclasAtaque()
   }
   
-   // Método para detener la música de fondo al finalizar la batalla
+  
   method finalizarBatalla() {
-    musicaFondo.stop() // Detiene la música de fondo
+    
   }
 
   // Devuelve el Pokémon activo del equipo del jugador
@@ -56,11 +57,25 @@ class ControladorDeBatalla {
   }
   
   method enviarPosicion(ataques, ataque) {
-    if (ataque == ataques.get(0)) ataque.cambiarPosicion(0)
-    if (ataque == ataques.get(1)) ataque.cambiarPosicion(1)
-    if (ataque == ataques.get(2)) ataque.cambiarPosicion(2)
-    if (ataque == ataques.get(3)) ataque.cambiarPosicion(3)
+    const index = self.obtenerIndice(ataques, ataque)
+    if (index >= 0) {
+      ataque.cambiarPosicion(index)
+    }
   }
+
+  method obtenerIndice(array, valor) {
+    var indice = -1
+    var i = 0
+    array.forEach({ elemento =>
+        if (elemento == valor) {
+          indice = i
+        } else{
+          i += 1
+        }
+      })
+    return indice
+   }
+  
   
   // Ejecuta el ataque elegido por el jugador
   method ejecutarAtaqueJugador(indiceAtaque) {
@@ -145,7 +160,7 @@ class ControladorDeBatalla {
       winloseSound.play()
 
       // Detener la música de fondo
-      self.finalizarBatalla()
+      musicaFondo.stop()
       
       game.schedule(1500, { game.stop() })
     }
@@ -162,38 +177,14 @@ class ControladorDeBatalla {
   method equipoDerrotado() = (indexPokemonJugador >= equipoJugador.size()) || (indexPokemonComputadora >= equipoComputadora.size())
   
   // Determina el equipo ganador
-  method determinarGanador() {
-    if (indexPokemonJugador >= equipoJugador.size()) {
-      return "Equipo Computadora"
-    } else {
-      return "Equipo Jugador"
-    }
-  }
-  
-  method actualizarImagenVida(pokemon) {
-    const nuevaImagenVida = self.obtenerImagenVida(pokemon.vida())
-    if (pokemon.side() == "Frente") {
-      game.removeVisual(vidaJugador)
-      vidaJugador.setImage(nuevaImagenVida)
-      game.addVisual(vidaJugador)
-    } else {
-      game.removeVisual(vidaComputadora)
-      vidaComputadora.setImage(nuevaImagenVida)
-      game.addVisual(vidaComputadora)
-    }
+  method determinarGanador() = if (indexPokemonJugador >= equipoJugador.size()) "Equipo Computadora" else "Equipo Jugador"
+
+  method actualizarImagenVidaJugador(){
+    vidaJugador.actualizarImagen(self.pokemonActivoJugador().vida())
   }
 
-  method actualizarImagenVidaJugador() {
-    self.actualizarImagenVida(self.pokemonActivoJugador())
-  }
-  
   method actualizarImagenVidaComputadora() {
-    self.actualizarImagenVida(self.pokemonActivoComputadora())
-  }
-  
-  method obtenerImagenVida(vida) {
-    const rango = if (vida <= 0) 0 else (vida / 20).div(1) * 20
-    return rango.toString() + "_vida.png"
+    vidaComputadora.actualizarImagen(self.pokemonActivoComputadora().vida())
   }
 }
 
@@ -213,28 +204,34 @@ object lose {
   method image() = "lose.png"
 }
 
-object vidaJugador {
-  const position = game.at(64, 32)
-  var image = "100_vida.png"
-  
-  method position() = position
-  
+class Vida{
+  var image =  "100_vida.png"
+
+  method position() 
+
   method image() = image
   
   method setImage(newImage) {
     image = newImage
+  }
+
+  method actualizarImagen(vidaPokemon) {
+    const nuevaImagenVida = self.obtenerImagenVida(vidaPokemon)
+    game.removeVisual(self)
+    self.setImage(nuevaImagenVida)
+    game.addVisual(self)
+  }
+
+  method obtenerImagenVida(vida) {
+    const rango = if (vida <= 0) 0 else (vida / 20).div(1) * 20
+    return rango.toString() + "_vida.png"
   }
 }
 
-object vidaComputadora {
-  const position = game.at(31, 21)
-  var image = "100_vida.png"
-  
-  method position() = position
-  
-  method image() = image
-  
-  method setImage(newImage) {
-    image = newImage
-  }
+object vidaJugador inherits Vida  {
+  override method position() = game.at(64, 32)
+}
+
+object vidaComputadora inherits Vida{
+  override method position() = game.at(31, 21)
 }
