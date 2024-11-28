@@ -16,8 +16,11 @@ class Ataque {
     const danioTotal = self.calcularEfecto(pokemonAtacante, pokemonOponente)
     pokemonOponente.recibirDanio(danioTotal)
     
-    /* Aca podriamos meter visuales */
-    // game.say(pokemonOponente, "AUCH") 
+    // Reproducir sonido del ataque
+    if(nombre != "curarse"){
+      const ataqueSound = game.sound("sound_golpe.mp3")
+      ataqueSound.play()
+    }
 
     // Volver a la posicion inicial
     game.schedule(300, {pokemonAtacante.volverDeAtacar()})
