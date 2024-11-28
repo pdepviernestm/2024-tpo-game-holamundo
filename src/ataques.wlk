@@ -20,6 +20,9 @@ class Ataque {
     if(nombre != "curarse"){
       const ataqueSound = game.sound("sound_golpe.mp3")
       ataqueSound.play()
+    } else {
+      const curarseSound = game.sound("sound_curarse.mp3")
+      curarseSound.play()
     }
 
     // Volver a la posicion inicial

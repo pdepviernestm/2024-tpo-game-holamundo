@@ -10,7 +10,7 @@ object pokemonesElegir {
   var index = 0
   var currentIndex = 0 // Índice actual del Pokémon seleccionado
 
-  const listaPokemones = [
+  const property listaPokemones = [
     squirtle,
     totodile,
     charmander,
@@ -64,10 +64,10 @@ object pokemonesElegir {
     })
 
     keyboard.right().onPressDo({
-      if ((currentIndex + 1) % 4 != 0 && currentIndex < 7) {
+      if (currentIndex < 7) {
         self.cambiarSeleccion(currentIndex + 1) // Mover hacia la derecha dentro de la lista
       } else {
-        self.cambiarSeleccion(currentIndex - 3) // Si está en el borde derecho, ir al borde izquierdo de la misma fila
+        self.cambiarSeleccion(0) // Si está en el borde derecho, ir al borde izquierdo de la misma fila
       }
     })
 
@@ -76,6 +76,22 @@ object pokemonesElegir {
       self.seleccionarPokemon(currentIndex)
       self.comprobarSeleccionCompleta() // Verifica si ambos equipos están completos
     })
+  }
+
+  method moverSeleccionDerecha(newIndex) {
+    if (newIndex < 7) {
+        self.cambiarSeleccion(newIndex + 1) // Mover hacia la derecha dentro de la lista
+      } else {
+        self.cambiarSeleccion(0) // Si está en el borde derecho, ir al borde izquierdo de la misma fila
+      }
+  }
+
+  method moverSeleccionIzquierda(newIndex) {
+    if (newIndex > 0) {
+        self.cambiarSeleccion(newIndex - 1) // Mover hacia la derecha dentro de la lista
+      } else {
+        self.cambiarSeleccion(7) // Si está en el borde derecho, ir al borde izquierdo de la misma fila
+      }
   }
 
   method crearPokemonVisual(pokemon) {
@@ -108,6 +124,11 @@ object pokemonesElegir {
     game.addVisual(auxNombre)
 
     listaVisuales.add(aux)
+  }
+
+  method seEncuentraSeleccionado(newIndex) {
+    const pokemonSeleccionado = listaPokemones.get(newIndex)
+    return equipoJugador.any({p => p == pokemonSeleccionado}) || equipoComputadora.any({p => p == pokemonSeleccionado})
   }
 
   method seleccionarPokemon(id) {
@@ -149,13 +170,21 @@ object pokemonesElegir {
     var pokemonVisual = listaVisuales.get(currentIndex)
     // Cambia el color del cuadrado de la selección anterior
     pokemonVisual.cuadrado().cambiarColorSeleccion() // Desmarca el cuadrado anterior
+    
+    if (self.seEncuentraSeleccionado(newIndex)) {
+      if (currentIndex < newIndex) {
+        self.moverSeleccionDerecha(newIndex)
+      } else {
+        self.moverSeleccionIzquierda(newIndex)
+      }
+    } else {
+      // Actualiza el índice de selección actual
+      currentIndex = newIndex
+      pokemonVisual = listaVisuales.get(currentIndex)
 
-    // Actualiza el índice de selección actual
-    currentIndex = newIndex
-    pokemonVisual = listaVisuales.get(currentIndex)
-
-    // Cambia el color del nuevo cuadrado seleccionado
-    pokemonVisual.cuadrado().cambiarANaranjaClaro() // Marca el nuevo cuadrado
+      // Cambia el color del nuevo cuadrado seleccionado
+      pokemonVisual.cuadrado().cambiarANaranjaClaro() // Marca el nuevo cuadrado
+    }
   }
   
   method iniciarBatalla() {
