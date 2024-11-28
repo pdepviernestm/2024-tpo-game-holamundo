@@ -6,66 +6,46 @@ import ataques.*
 class Pokemon {
   const nombre
   const property tipo
+  var property vida = 100
   const property ataques = []
 
-  var property vida = 100
   var property side = "Frente"
-  var atacando = 0
+  var atacando = false
   
-  // la idea es que funcionen como un semaforo para la posicion de objeto
   method image() = (nombre + side) + ".png"
   
   method nombre() = nombre
   
+  method posicionLejos() = game.at(60, 20)
+
+  method posicionCerca() = game.at(25, 8)
+
   method position() {
-    if (atacando == 0) {
-      if (side == "Frente") {
-        return game.at(60, 20)
-      } else {
-        return game.at(25, 8)
-      }
+    if (side == "Frente") {
+      return if(atacando) self.posicionCerca() else self.posicionLejos()
     } else {
-      /* Si esta atacando se acerca al oponente y luego vuelve */
-      if (side == "Frente") {
-        return game.at(25, 8)
-      } else {
-        return game.at(60, 20)
-      }
+      return if(atacando) self.posicionLejos() else self.posicionCerca()
     }
   }
   
   method cambiarSide() {
-    if (side == "Frente") {
-      side = "Espalda"
-    } else {
-      side = "Frente"
-    }
+    side = if (side == "Frente") "Espalda" else "Frente"
   }
   
   method irAtacar() {
-    atacando = 1
+    atacando = true
   }
   
   method volverDeAtacar() {
-    atacando = 0
+    atacando = false
   }
   
-  // Metodo para recibir danio
   method recibirDanio(danio) {
-  vida = (vida - danio).max(0)
-  vida = (vida - danio).max(0)
-  
     vida = (vida - danio).max(0)
-  
   }
   
   method agregarVida(nuevaVida) {
     vida += nuevaVida
-  }
-  
-  method terminarTurno() {
-    
-    // self.cambiarSide()
   }
   
   // Método para elegir el ataque mayor efecto
@@ -76,8 +56,9 @@ class Pokemon {
     mejorAtaque.ejecutar(self, pokemonOponente)
     return mejorAtaque
   }
-} /* Agua */
+} 
 
+/* Agua */
 object squirtle inherits Pokemon (
   nombre = "Squirtle",
   tipo = agua,
