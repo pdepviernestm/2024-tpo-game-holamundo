@@ -191,20 +191,9 @@ class ControladorDeBatalla {
     self.actualizarImagenVida(self.pokemonActivoComputadora())
   }
   
-  method obtenerImagenVida(vida) { 
-    if (vida == 100) {
-      return "100_vida.png"
-    } else if (vida >= 80) {
-      return "80_vida.png"
-    } else if (vida >= 60) {
-      return "60_vida.png"
-    } else if (vida >= 40) {
-      return "40_vida.png"
-    } else if (vida > 0) {
-      return "20_vida.png"
-    } else (vida <= 0) {
-      return "0_vida.png"
-    }
+  method obtenerImagenVida(vida) {
+    const rango = if (vida <= 0) 0 else (vida / 20).div(1) * 20
+    return rango.toString() + "_vida.png"
   }
 }
 
