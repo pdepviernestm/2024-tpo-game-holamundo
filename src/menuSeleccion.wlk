@@ -73,8 +73,10 @@ object pokemonesElegir {
 
     // Tecla para confirmar la selección de Pokémon
     keyboard.space().onPressDo({
-      self.seleccionarPokemon(currentIndex)
+      if (not self.seEncuentraSeleccionado(currentIndex)) {
+        self.seleccionarPokemon(currentIndex)
       self.comprobarSeleccionCompleta() // Verifica si ambos equipos están completos
+      }
     })
   }
 
