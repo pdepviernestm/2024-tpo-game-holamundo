@@ -5,6 +5,6 @@ import menuInicio.*
 
 program menuGame {
   menuInicio.iniciar() // Iniciar el juego
-  
-  game.start() 
+
+  game.start()
 }

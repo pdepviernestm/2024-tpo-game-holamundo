@@ -6,6 +6,7 @@ import tipos.*
 class ControladorDeBatalla {
   const equipoJugador
   const equipoComputadora
+  const visualPokebolas = []
   var indexPokemonJugador = 0 
   var indexPokemonComputadora = 0
 
@@ -29,6 +30,7 @@ class ControladorDeBatalla {
     self.agregarTeclasAtaques()
     game.addVisual(teclasAtaques)
     self.configurarTeclasAtaque()
+    self.obtenerImagenPokemones()
   }
   
    // Método para detener la música de fondo al finalizar la batalla
@@ -89,7 +91,7 @@ class ControladorDeBatalla {
   method turnoComputadora() {
     const pokemonComputadora = self.pokemonActivoComputadora()
     const pokemonJugador = self.pokemonActivoJugador()
-    
+
     
     if (pokemonComputadora.vida() > 0) {
       const ataque = pokemonComputadora.elegirAtaque(pokemonJugador)
@@ -116,6 +118,7 @@ class ControladorDeBatalla {
       game.removeVisual(vidaJugador)
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
       indexPokemonJugador += 1
+      self.obtenerImagenPokemones()
       if (indexPokemonJugador < equipoJugador.size()) {
         game.addVisual(self.pokemonActivoJugador())
         self.agregarTeclasAtaques()
@@ -126,6 +129,7 @@ class ControladorDeBatalla {
       game.removeVisual(pokemonComputadora)
       game.removeVisual(vidaComputadora)
       indexPokemonComputadora += 1
+      self.obtenerImagenPokemones()
       if (indexPokemonComputadora < equipoComputadora.size()) game.addVisual(
           self.pokemonActivoComputadora()
         )
@@ -133,6 +137,7 @@ class ControladorDeBatalla {
     
     if (self.equipoDerrotado()) {
       // Desactivar teclas al finalizar la batalla
+      self.obtenerImagenPokemones()
       self.desactivarTeclas()
       pokemonJugador.ataques().forEach({ ataque => game.removeVisual(ataque) })
       game.removeVisual(teclasAtaques)
@@ -206,6 +211,35 @@ class ControladorDeBatalla {
       return "0_vida.png"
     }
   }
+
+  method obtenerImagenPokemones() {
+    visualPokebolas.forEach({pokebola => game.removeVisual(pokebola)})
+    equipoComputadora.forEach({p => game.addVisual(self.crearImagenPokebola(indexPokemonComputadora, equipoComputadora, p, 2, 2))})
+    equipoJugador.forEach({p => game.addVisual(self.crearImagenPokebola(indexPokemonJugador, equipoJugador, p, 60, 40))})
+  }
+
+  method crearImagenPokebola(indexEquipo, equipo, p, posX, posY) {
+    const indexPokemon = self.obtenerIndex(equipo, p)
+    var nombre
+    if (indexEquipo >= equipo.size() || indexEquipo > indexPokemon) {
+      nombre = "bola"
+    } else {
+      nombre = p.nombre()
+    }
+    const imgPokebola = new ImagenPokebola(posX = posX + indexPokemon*5, posY = posY, nombre = nombre)
+    visualPokebolas.add(imgPokebola)
+    return imgPokebola
+  }
+
+  method obtenerIndex(lista, objeto) {
+    if (objeto == lista.get(0)) {
+      return 0
+    } else if (objeto == lista.get(1)) {
+      return 1
+    } else {
+      return 2
+    }
+  }
 }
 
 object win {
@@ -249,3 +283,17 @@ object vidaComputadora {
     image = newImage
   }
 }
+
+class ImagenPokebola{
+  const posX
+  const posY
+  const nombre
+  
+  const position = game.at(posX, posY)
+      
+  method position() = position
+  
+  // Método que devuelve la imagen de la pokebola
+  method image() = "poke" + nombre + ".png"
+}
+
