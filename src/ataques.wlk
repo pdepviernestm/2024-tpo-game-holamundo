@@ -103,7 +103,7 @@ object veneno inherits Ataque(nombre = "Veneno", danioBase = 12, nombreImagen = 
 object rayoSolar inherits Ataque(nombre = "Rayo Solar", danioBase = 25, nombreImagen = "RayoSolar.png") {}
 object latigoCepa inherits Ataque(nombre = "Látigo Cepa", danioBase = 14, nombreImagen = "LatigoCepa.png") {}
 
-object teclasAtaques {
+object teclas {
   const property position = game.at(54, 5)
   method image() = "teclasAtaques.png"
 }
