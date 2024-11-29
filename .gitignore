@@ -4,3 +4,6 @@
 
 # Wollok Log
 *.log
+
+/bin
+
